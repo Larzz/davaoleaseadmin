@@ -1,4 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DavaoLease Admin
+
+Admin panel for **DavaoLease**, a property rental/leasing marketplace. This app is used by DavaoLease staff to manage users, listings, verifications, content, payments, and support.
+
+## Features
+
+### 8.1 Dashboard (Home)
+- Total Listings
+- Active Agents
+- Active Agencies
+- Revenue
+- Monthly Signups
+- Pending Verifications
+
+### 8.2 Users
+Manage: Renters · Agents · Agencies · Admins
+
+### 8.3 Listing Approval
+Actions: Approve · Reject · Flag · Suspend
+
+### 8.4 Verification Center
+Verify: PRC License · Government ID · Broker License · Business Permit
+
+### 8.5 Categories
+Manage: Property Types · Amenities · Locations (Cities, Barangays)
+
+### 8.6 Blog CMS
+Articles · Categories · Tags · SEO
+
+### 8.7 Reports
+Flagged Listings · Fraud · Spam · Fake Agents
+
+### 8.8 Payments
+Subscriptions · Featured Listing Badges · Refunds · Invoices
+
+### 8.9 Support
+Tickets · Live Chat · FAQ Management
 
 ## Getting Started
 

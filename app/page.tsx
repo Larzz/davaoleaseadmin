@@ -1,65 +1,152 @@
-import Image from "next/image";
+import Link from "next/link";
+import {
+  Building2,
+  CalendarCheck,
+  DollarSign,
+  Home,
+  MoreHorizontal,
+  ShieldQuestion,
+  UserCheck,
+} from "lucide-react";
 
-export default function Home() {
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { StatCardView } from "@/components/dashboard/stat-card";
+import { ListingStatusBadge } from "@/components/dashboard/status-badge";
+import { SignupsChart } from "@/components/dashboard/signups-chart";
+import {
+  formatPHP,
+  recentActivity,
+  recentListings,
+  monthlySignups,
+  statCards,
+} from "@/lib/mock-data";
+
+const statIcons = [Home, UserCheck, Building2, DollarSign, CalendarCheck, ShieldQuestion];
+
+export default function DashboardPage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="flex flex-1 flex-col gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {statCards.map((stat, i) => (
+          <StatCardView key={stat.label} {...stat} icon={statIcons[i]} />
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+        <Card className="xl:col-span-2">
+          <CardHeader className="flex-row items-center justify-between">
+            <CardTitle>Recent Listings</CardTitle>
+            <Link
+              href="/listings"
+              className="text-sm font-medium text-primary hover:underline"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+              View All
+            </Link>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Property</TableHead>
+                  <TableHead>Location</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Agent</TableHead>
+                  <TableHead>Created</TableHead>
+                  <TableHead className="w-8" />
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {recentListings.map((listing) => (
+                  <TableRow key={listing.id}>
+                    <TableCell className="font-medium">
+                      {listing.property}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {listing.location}
+                    </TableCell>
+                    <TableCell>{formatPHP(listing.price)}</TableCell>
+                    <TableCell>
+                      <ListingStatusBadge status={listing.status} />
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {listing.agent}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {listing.createdAt}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger
+                          render={
+                            <Button variant="ghost" size="icon-sm">
+                              <MoreHorizontal />
+                            </Button>
+                          }
+                        />
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>View details</DropdownMenuItem>
+                          <DropdownMenuItem>Approve</DropdownMenuItem>
+                          <DropdownMenuItem>Flag</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Activity</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
+            {recentActivity.map((item) => (
+              <div key={item.id} className="flex flex-col gap-1 border-b pb-4 last:border-b-0 last:pb-0">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm font-medium">{item.name}</span>
+                  <Badge
+                    variant={item.status === "New" ? "default" : "secondary"}
+                  >
+                    {item.status}
+                  </Badge>
+                </div>
+                <p className="text-sm text-muted-foreground">{item.message}</p>
+                <span className="text-xs text-muted-foreground">
+                  {item.timestamp}
+                </span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Monthly Signups</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <SignupsChart data={monthlySignups} />
+        </CardContent>
+      </Card>
     </div>
   );
 }
