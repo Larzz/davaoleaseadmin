@@ -1,5 +1,4 @@
 import {
-  Building2,
   ClipboardCheck,
   FileText,
   Flag,
@@ -29,8 +28,6 @@ export const navItems: NavItem[] = [
   { title: "Payments", url: "/payments", icon: Wallet },
   { title: "Support", url: "/support", icon: MessagesSquare },
 ];
-
-export { Building2 };
 
 export function getPageTitle(pathname: string): string {
   const item =

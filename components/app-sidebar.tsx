@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Building2, navItems } from "@/lib/nav";
+import { navItems } from "@/lib/nav";
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -24,16 +24,18 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" render={<Link href="/" />}>
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Building2 className="size-4" />
-              </div>
-              <span className="text-base font-semibold">DavaoLease</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <Link href="/" className="flex items-center justify-center py-2">
+          <img
+            src="/assets/davaolease-icon.png"
+            alt="DavaoLease"
+            className="hidden size-9 shrink-0 rounded-md object-contain group-data-[collapsible=icon]:block"
+          />
+          <img
+            src="/assets/davaolease.svg"
+            alt="DavaoLease"
+            className="h-11 w-auto group-data-[collapsible=icon]:hidden"
+          />
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -64,7 +66,7 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg">
+            <SidebarMenuButton size="lg" render={<Link href="/login" />}>
               <Avatar className="size-8 rounded-lg">
                 <AvatarFallback className="rounded-lg">AD</AvatarFallback>
               </Avatar>
